@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        overflow: hidden;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-image: url("img/city.jpg");
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center center;
+      }
+      #textInput {
+        padding: 5px;
+        font-size: 1.5rem;
+        color: #fff;
+        border: 0;
+        border-bottom: 2px solid #fff;
+        background: transparent;
+        margin-right: 10px;
+        transition: border-color 0.2s ease-in-out;
+      }
+      #textInput::placeholder {
+        color: hsla(0, 0%, 100%, 0.5);
+      }
+      #textInput::-webkit-input-placeholder {
+        color: hsla(0, 0%, 100%, 0.5);
+      }
+
+      #textInput:hover {
+        outline: none;
+      }
+      #textInput:focus {
+        outline: none;
+      }
+      #btn {
+        color: #fff;
+        cursor: pointer;
+        font-size: 1.5rem;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <input type="text" placeholder="最重要的事" id="textInput" />
+      <span id="btn" onclick="change()">✔</span>
+
+      <script>
+        let itemExist = false;
+        let btn = document.getElementById("btn");
+        let textInput = document.getElementById("textInput");
+
+        function change() {
+          if (itemExist) {
+            itemExist = false;
+            btn.innerText = "✔";
+            textInput.value = "";
+            textInput.style.borderBottomColor = "#fff";
+            textInput.readOnly = false;
+            window.localStorage.removeItem("shi");
+          } else {
+            itemExist = true;
+            btn.innerText = "✘";
+            textInput.style.borderBottomColor = "transparent";
+            textInput.readOnly = true;
+            window.localStorage.setItem("shi", textInput.value);
+          }
+        }
+
+        let data = window.localStorage.getItem("shi");
+        if (data) {
+          document.getElementById("textInput").value = data;
+          change();
+        }
+      </script>
+    </div>
+  </body>
+</html>
